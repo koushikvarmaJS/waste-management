@@ -1,5 +1,5 @@
 const PieColors = {
-    Entertainment:{
+    Accessories:{
         text:'white',
         color:'blueviolet'
     },
@@ -7,29 +7,25 @@ const PieColors = {
         text:'white',
         color:'cadetblue'
     },
-    Shopping:{
+    Clothes:{
         text:'white',
         color:'cornflowerblue'
     },
-    Travel:{
+    Place:{
         text:'white',
         color:'seagreen'
     },
-    Health:{
+    Medicine:{
         text:'black',
         color:'plum'
     },
-    Sports:{
+    PetSupplies:{
         text:'white',
         color:'green'
     },
-    Bills:{
+    Stationary:{
         text:'black',
         color:'paleturquoise'
-    },
-    Electronics:{
-        text:'white',
-        color:'darkblue'
     },
     Others:{
         text:'black',

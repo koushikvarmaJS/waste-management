@@ -6,10 +6,10 @@ const AppName = () => {
     return (
         <View style={styles.container}>
           <View style={styles.moneyWrap}>
-            <Text style={styles.money}>MONEY</Text>
-            <Icon name={"money"} size={20} color={'green'}/>
+            <Text style={styles.money}>GIVE</Text>
+            <Icon name={"handshake-o"} size={20} color={'green'}/>
           </View>
-          <Text style={styles.manager}>Manager</Text>
+          <Text style={styles.manager}>GRID</Text>
         </View>
       )
 }

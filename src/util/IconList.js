@@ -1,37 +1,29 @@
 const IconList = {
-    Income:{
-        icon:'cash-multiple',
-        color:'darkgreen'
-    },
-    Entertainment:{
-        icon:'youtube-tv',
+    Stationary:{
+        icon:'lead-pencil',
         color:'red'
     },
     Food:{
         icon:'food',
         color:'orangered'
     },
-    Shopping:{
+    Clothes:{
         icon:'shopping',
         color:'chocolate'
     },
-    Travel:{
-        icon:'train-car',
-        color:'teal'
-    },
-    Health:{
+    Medicine:{
         icon:'hospital-box-outline',
         color:'crimson'
     },
-    Sports:{
-        icon:'soccer-field',
+    Place:{
+        icon:'home',
         color:'green'
     },
-    Bills:{
-        icon:'cash-minus',
+    PetSupplies:{
+        icon:'dog-side',
         color:'lightcoral'
     },
-    Electronics:{
+    Accessories:{
         icon:'cellphone-link',
         color:'darkblue'
     },

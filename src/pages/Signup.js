@@ -27,23 +27,23 @@ const Signup = (props) => {
       Alert.alert('Error', 'Passwords do not match')
       return
     }
-    const userId = generateUserId()
+    const donarId = generateUserId()
     const createDate = generateCreateDate()
 
     const newUser = {
       email,
       passwordHash: password,
       userName,
-      userId,
+      donarId,
       createDate,
-      currentBalance: 0
+      rewards: 0
     }
 
     try {
       console.log('Creating user:', newUser)
       const user = await createUser(newUser)
       console.log('User created:', user)
-      setUser(userId)
+      setUser(donarId)
       Alert.alert('Success', 'Account created successfully')
       navigation.navigate('Tabs')
     } catch (error) {

@@ -12,22 +12,21 @@ import {
 } from 'react-native'
 import { MaterialCommunityIcons,FontAwesome,Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { deleteExpense } from "../util/Api";
+import { updateStatus } from "../util/Api";
 
 
-const ExpenseList = (props) => {
-    const {icon,description,color,location,status,donar,timeStamp,setChange} = props
+const DonationList = (props) => {
+    const {donar,icon,description,color,location,userName,status,timeStamp,setValid} = props
     const [listColor,setColor] = useState('ghostwhite')
     const [modalVisible,setModalVisible] = useState(false)
 
-    const handleDelete = () => {
+    const handleAccept = () => {
         const donation = {
             "donar":donar,
             "timeStamp":timeStamp,
-            "location":location,
         }
-        deleteExpense(donation).then((data) => {setChange(data.rewards)})
-        Alert.alert("Deleted Donation")
+        updateStatus(donation).then((data) => {setValid(true)})
+        Alert.alert("Donation Accpeted")
         setModalVisible(false)
     }
 
@@ -43,16 +42,16 @@ const ExpenseList = (props) => {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.backWrap}>
                         <View style={styles.popWrap}>
-                            <Text style={styles.deleteText}>Delete expense?</Text>
+                            <Text style={styles.deleteText}>Request this item?</Text>
                             <View style={styles.endButtons}>
                                 <Button
                                 title="cancel"
                                 onPress={()=> setModalVisible(!modalVisible)}
                                 />
                                 <Button 
-                                title="delete"
+                                title="accept"
                                 color={'red'}
-                                onPress={handleDelete}
+                                onPress={handleAccept}
                                 />
                             </View>
                         </View>
@@ -84,8 +83,10 @@ const ExpenseList = (props) => {
                             {` ${location}`}
                         </Text>
                     </View>
-                    <View>
-                        <Feather name={type} size={20} color={paint} />
+                    <LinearGradient colors={['transparent','white']} style={styles.line}/>
+                    <View style={styles.userNameWrap}>
+                        <Text style={styles.textWrap}>{userName}</Text>
+                        <Feather name={type} size={15} color={paint} style={[{flex:1},{marginLeft:20}]} />
                     </View>
                 </View>
             </Pressable>
@@ -147,6 +148,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         paddingTop:10
     },
+    userNameWrap:{
+        flexDirection: "column",
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    }
 })
 
-export default ExpenseList
+export default DonationList

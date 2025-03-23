@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native'
@@ -28,7 +27,7 @@ const Login = (props) => {
       
       if (result && Object.keys(result).length > 0) {
         setErrorFlag(false);  
-        setUser(result.userId);
+        setUser(result.donarId);
         navigation.navigate('Tabs');
       } else {
         setErrorFlag(true); 
@@ -61,7 +60,7 @@ const Login = (props) => {
               name="login"
               size={75}
               color={'#006A42'}
-              style={{ marginBottom: 30, paddingRight:20}}
+              style={{ marginBottom: 30,paddingRight:20}}
             />
             <Field
               placeholder="Username/Email"

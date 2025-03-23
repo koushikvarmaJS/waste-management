@@ -2,9 +2,9 @@ import React from "react";
 import { Modal, View, Text, Button, StyleSheet,Alert } from "react-native";
 import { deleteUser } from "../util/Api";
 
-const DeletePop = ({ visible, onClose, userId, onDelete }) => {
+const DeletePop = ({ visible, onClose, donarId, onDelete }) => {
   const handleDelete = async () => {
-    deleteUser(userId).then((data)=>{})
+    deleteUser(donarId).then((data)=>{})
     Alert.alert('Success', 'Account Deleted')
     onClose();
     onDelete();

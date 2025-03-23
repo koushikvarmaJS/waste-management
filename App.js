@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { UserProvider } from './src/util/User'
 import Tabs from './src/util/Tabs'
-import CalendarGrid from './src/components/CalendarGrid'
 import Signup from './src/pages/Signup'
 import Login from './src/pages/Login'
 
@@ -28,11 +27,6 @@ const App = () => {
             name="Tabs"
             component={Tabs}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
-          name="Calender"
-          component={CalendarGrid}
-          options={{headerShown:false}}
           />
         </Stack.Navigator>
         <StatusBar style="auto" hidden={false} />

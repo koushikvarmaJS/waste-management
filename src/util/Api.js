@@ -1,34 +1,15 @@
-const url = 'https://moneymanager-backend-ajpx.onrender.com'
+const ip = "10.0.0.186"
+const url = `http://${ip}:3000`
 
 //console.log(url)
-const getTransactionsList = async (user,startTime,endTime) => {
-  return fetch(
-    `${url}/api/transactions?user=${user}&startTime=${startTime}&endTime=${endTime}`
-  )
-    .then(async (response) => {
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`Network response was not ok for TransactionsList: ${errorText}`)
-      }
-      try {
-        const data = await response.json()
-        return data
-      } catch (error) {
-        const errorText = await response.text()
-        throw new Error(`Failed to parse JSON: ${errorText}`)
-      }
-    })
-    .catch((error) => console.error('error loading data', error))
-}
 
 const getTransactionAmountByCategory = async (
   user,
   startTime,
   endTime,
-  transactionType
 ) => {
   return fetch(
-    `${url}/api/pieChart/getTransactionAmountByCategory?user=${user}&startTime=${startTime}&endTime=${endTime}&transactionType=${transactionType}`
+    `${url}/api/pieChart/getTransactionAmountByCategory?donar=${user}&startTime=${startTime}&endTime=${endTime}`
   )
     .then(async (response) => {
       if (!response.ok) {
@@ -43,11 +24,11 @@ const getTransactionAmountByCategory = async (
         throw new Error(`Failed to parse JSON: ${errorText}`)
       }
     })
-    .catch((error) => console.error('error loading data', error))
+    .catch((error) => console.error('error loading data for piechart', error))
 }
 
-const getBalance = (user) => {
-  return fetch(`${url}/api/balance?user=${user}`)
+const getBalance = (donar) => {
+  return fetch(`${url}/api/rewards?donar=${donar}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok for getbalance');
@@ -55,17 +36,17 @@ const getBalance = (user) => {
       return response.json();
     })
     .then((data) => {
-      // console.log('fetched data for balance', data);
-      return data[0].currentBalance
+      console.log('fetched data for rewards', data);
+      return data[0].rewards
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data for rewards', error);
       throw error;
     });
 };
 
 const getRecentTransactions = (user) => {
-  return fetch(`${url}/api/recents?user=${user}`)
+  return fetch(`${url}/api/recents?donar=${user}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok for recents');
@@ -77,13 +58,31 @@ const getRecentTransactions = (user) => {
       return data;
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data for recents', error);
+      throw error;
+    });
+};
+
+const getDonations = (donar) => {
+  return fetch(`${url}/api/donations?donar=${donar}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for donations');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // console.log('fetched data', data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('error loading data for donations', error);
       throw error;
     });
 };
 
 const getUserDetails = (user) => {
-  return fetch(`${url}/api/user?userId=${user}`)
+  return fetch(`${url}/api/donar?donarId=${user}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok for userdetails');
@@ -95,14 +94,14 @@ const getUserDetails = (user) => {
       return data;
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data for user details', error);
       throw error;
     });
 };
 
 const checkUserDetails = (user, password) => {
   // console.log("I am here");
-  return fetch(`${url}/api/user/check?userInput=${user}&passwordHash=${password}`)
+  return fetch(`${url}/api/donar/check?userInput=${user}&passwordHash=${password}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok for userdetails');
@@ -114,18 +113,19 @@ const checkUserDetails = (user, password) => {
       return data;
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data to check user details', error);
       throw error;
     });
 };
 
 const addExpense = (newItem) => {
-  return fetch(`${url}/api/expense`,{
+  return fetch(`${url}/api/donation`,{
     method: 'POST',
     headers: { 'content-Type': 'application/json' },
     body: JSON.stringify(newItem)
   })
     .then((response) => {
+      console.log(response.status,response)
       if (!response.ok) {
         throw new Error('Network response was not ok to add expense');
       }
@@ -136,36 +136,15 @@ const addExpense = (newItem) => {
       return data.updatedBalance.Attributes
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data adding expense', error);
       throw error;
     });
 };
 
-const addIncome = (newItem) => {
-  return fetch(`${url}/api/income`,{
-    method: 'POST',
-    headers: { 'content-Type': 'application/json' },
-    body: JSON.stringify(newItem)
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok to add income');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log('fetched data', data);
-      return data.Attributes;
-    })
-    .catch((error) => {
-      console.error('error loading data', error);
-      throw error;
-    });
-};
 
 const updateUserDetails = (updateUser) => {
-  const user = updateUser.userId
-  return fetch(`${url}/api/user/update?userId=${user}`,{
+  const donar = updateUser.donarId
+  return fetch(`${url}/api/donar/update?donarId=${donar}`,{
     method: 'PUT',
     headers: { 'content-Type': 'application/json' },
     body: JSON.stringify(updateUser)
@@ -181,13 +160,35 @@ const updateUserDetails = (updateUser) => {
       return data;
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data updating user details', error);
+      throw error;
+    });
+};
+
+const updateStatus = (donation) => {
+  return fetch(`${url}/api/status`,{
+    method: 'PUT',
+    headers: { 'content-Type': 'application/json' },
+    body: JSON.stringify(donation)
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok to update status');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('Updated user', data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('error loading data updating status', error);
       throw error;
     });
 };
 
 const createUser = (newUser) => {
-  return fetch(`${url}/api/newuser`,{
+  return fetch(`${url}/api/newdonar`,{
     method: 'POST',
     headers: { 'content-Type': 'application/json' },
     body: JSON.stringify(newUser)
@@ -203,13 +204,13 @@ const createUser = (newUser) => {
       return data
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data creating user', error);
       throw error;
     });
 };
 
-const deleteUser = (user) => {
-  return fetch(`${url}/api/user/delete?userId=${user}`,{
+const deleteUser = (donar) => {
+  return fetch(`${url}/api/donar/delete?donarId=${donar}`,{
     method: 'DELETE',
   })
     .then((response) => {
@@ -223,16 +224,16 @@ const deleteUser = (user) => {
       return data
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data deleting user', error);
       throw error;
     });
 };
 
-const deleteExpense = (expense) => {
-  return fetch(`${url}/api/deleteExpense`,{
+const deleteExpense = (donation) => {
+  return fetch(`${url}/api/deleteDonation`,{
     method: 'DELETE',
     headers: { 'content-Type': 'application/json' },
-    body: JSON.stringify(expense)
+    body: JSON.stringify(donation)
   })
     .then((response) => {
       if (!response.ok) {
@@ -245,22 +246,24 @@ const deleteExpense = (expense) => {
       return data.Attributes;
     })
     .catch((error) => {
-      console.error('error loading data', error);
+      console.error('error loading data deleting expense', error);
       throw error;
     });
 };
+
+
 
 module.exports = {
   getTransactionAmountByCategory,
   getBalance,
   getRecentTransactions,
   addExpense,
-  addIncome,
   deleteExpense,
-  getTransactionsList,
   createUser,
   getUserDetails,
   checkUserDetails,
   updateUserDetails,
-  deleteUser
+  deleteUser,
+  getDonations,
+  updateStatus
 }

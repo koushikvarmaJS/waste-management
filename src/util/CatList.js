@@ -1,13 +1,11 @@
 const CatList = [
-    'Income',
-    'Entertainment',
-    'Travel',
     'Food',
-    'Shopping',
-    'Health',
-    'Sports',
-    'Electronics',
-    'Bills',
+    'Clothes',
+    'Accessories',
+    'Place',
+    'Medicine',
+    "PetSupplies",
+    "Stationary",
     'Others'
 ]
 

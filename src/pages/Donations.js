@@ -7,31 +7,20 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native'
-import { getBalance, getRecentTransactions } from '../util/Api'
-import ExpenseList from '../components/ExpenseList'
-import ExpensePop from '../components/ExpensePop'
-import DayDate from '../components/DayDate'
+import { getDonations } from '../util/Api'
+import DonationList from '../components/DonationList'
 import IconList from '../util/IconList'
-import AppName from '../components/AppName'
-import Icon from '../components/Icon'
 import UserContext from '../util/User'
 
-const Home = () => {
+const Donations = () => {
   const { user } = useContext(UserContext)
-  const [balance, setBalance] = useState(0)
   const [dataList, setDataList] = useState([])
   const [valid, setValid] = useState(true)
   const [loading, setLoading] = useState(false)
   // console.log(user)
   const fetchData = () => {
     setLoading(true)
-    getBalance(user).then((rewards) => {
-      console.log('displaying current rewards', rewards)
-      if (rewards) {
-        setBalance(rewards)
-      }
-    })
-    getRecentTransactions(user).then((data) => {
+    getDonations(user).then((data) => {
       console.log('datalist',data)
       if (data) {
         setDataList(data)
@@ -46,60 +35,35 @@ const Home = () => {
     }
   }, [valid])
 
-  const [change, setChange] = useState(balance)
-
-  useEffect(() => {
-    if (change !== balance) {
-      setValid(true)
-    }
-  }, [change])
-
   const renderItem = ({ item }) => {
     const category = item.category
     const { icon, color } = IconList[category]
     return (
-      <ExpenseList
+      <DonationList
+        donar={item.donarId}
         icon={icon}
         color={color}
-        status={item.status}
         description={item.description}
         location={item.location}
-        donar={item.donarId}
+        userName={item.userName}
+        status={item.status}
         timeStamp={item.timeStamp}
-        setChange={setChange}
+        setValid={setValid}
       />
     )
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.wrap, { marginTop: 10 }]}>
-        <AppName />
-        <View style={{ flex: 1 }} />
-        <DayDate />
-      </View>
       <View style={[styles.wrap, { marginTop: 40 }]}>
-        <View>
-          <Text style={styles.balanceText}>Rewards:</Text>
-          <View style={styles.balanceStyle}>
-            <Icon name={'dollar'} size={25} color={'black'} />
-            <Text style={styles.balanceValue}>{balance}</Text>
-          </View>
-        </View>
-        <View>
-          <ExpensePop setChange={setChange} balance={balance} />
-        </View>
+          <Text style={styles.donationText}>DONATIONS</Text>
       </View>
-      <View style={[{ paddingHorizontal: 20 }, { marginTop: 20 }]}>
-        <Text style={styles.spendText}>RECENTS</Text>
-      </View>
-      <View style={{ padding: 10 }}>
+      <View style={[{ padding: 10}]}>
         {loading ? (
           <ActivityIndicator size={'large'} color={'black'} />
         ) : dataList.length === 0 ? (
           <View style={styles.noTransactionsWrap}>
             <Text style={[{fontSize:30},{color:'darkred'}]}>No recent donations</Text>
-            <Text style={[{fontSize:30},{color:'green'}]}>Donate Now!</Text>
           </View>
         ) : (
           <FlatList
@@ -127,9 +91,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center'
   },
-  balanceText: {
+  donationText: {
     fontSize: 20,
-    fontWeight: '300'
+    fontWeight: '500'
   },
   balanceStyle: {
     flexDirection: 'row',
@@ -152,4 +116,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+export default Donations

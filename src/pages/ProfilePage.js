@@ -91,8 +91,8 @@ const ProfilePage = (props) => {
               </View>
 
               <View style={styles.detailBlock}>
-                <Text style={styles.label}>Current Balance</Text>
-                <Text style={styles.value}>{userDetails.currentBalance}</Text>
+                <Text style={styles.label}>Rewards</Text>
+                <Text style={styles.value}>{userDetails.rewards}</Text>
               </View>
 
               <View style={styles.detailBlock}>
@@ -128,7 +128,7 @@ const ProfilePage = (props) => {
           <DeletePop
             visible={isDeleteModalVisible}
             onClose={() => setIsDeleteModalVisible(false)}
-            userId={userDetails.userId}
+            donarId={userDetails.donarId}
             onDelete={handleDeleteSuccess}
           />
         </>

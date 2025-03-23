@@ -13,7 +13,7 @@ const UpdatePop = (props) => {
     const updateUser = {
       email: email,
       passwordHash: passwordHash,
-      userId: userDetails.userId,
+      donarId: userDetails.donarId,
       userName: userName,
     };
     updateUserDetails(updateUser).then((data) => {onUpdate(data)});

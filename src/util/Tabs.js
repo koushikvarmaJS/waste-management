@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../pages/Home"
 import PieChartStat from "../pages/PieChart";
-import TransactionList from "../pages/TransactionList";
+import Donations from "../pages/Donations";
 import ProfilePage from "../pages/ProfilePage"
 import { MaterialCommunityIcons,Ionicons,FontAwesome } from "@expo/vector-icons";
 
@@ -47,8 +47,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Transactions"
-        component={TransactionList}
+        name="Donations"
+        component={Donations}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
