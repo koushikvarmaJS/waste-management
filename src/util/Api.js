@@ -1,4 +1,4 @@
-const ip = "10.0.0.186"
+const ip = "10.104.10.221"
 const url = `http://${ip}:3000`
 
 //console.log(url)
@@ -59,6 +59,24 @@ const getRecentTransactions = (user) => {
     })
     .catch((error) => {
       console.error('error loading data for recents', error);
+      throw error;
+    });
+};
+
+const getAllDonations = (user) => {
+  return fetch(`${url}/api/allDonations?donar=${user}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for all donations');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // console.log('fetched data', data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('error loading data for all donations', error);
       throw error;
     });
 };
@@ -265,5 +283,6 @@ module.exports = {
   updateUserDetails,
   deleteUser,
   getDonations,
-  updateStatus
+  updateStatus,
+  getAllDonations
 }

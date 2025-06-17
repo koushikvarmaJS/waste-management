@@ -163,7 +163,6 @@ const PieChartStat = () => {
         series={series}
         sliceColor={sliceColor}
       />
-
       <View style={styles.list}>
         {data.length === 0 ? (
           <Text style={{ fontSize: 30, color: 'darkred' }}>No donations</Text>
